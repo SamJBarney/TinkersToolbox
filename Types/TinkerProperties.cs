@@ -41,5 +41,8 @@ namespace TinkersToolbox.Types
 
         [JsonProperty]
         public string ToolheadSlot;
+
+        [JsonProperty]
+        public Dictionary<string, AssetLocation> ProvidedTextures;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TinkersToolbox.Client.Mesh;
 using TinkersToolbox.Types;
 using TinkersToolbox.Utils;
 using Vintagestory.API.Client;
@@ -13,8 +14,6 @@ namespace TinkersToolbox.Items
 {
     class ModularTool : ModularItem, IModularTool
     {
-        public TinkerProperties TinkerProps { get; set; }
-
         public override void OnLoaded(ICoreAPI api)
         {
             base.OnLoaded(api);
@@ -46,21 +45,6 @@ namespace TinkersToolbox.Items
             return base.GetMiningSpeed(itemstack, block, forPlayer);
         }
 
-        public bool AddPart(IItemStack stack, string slotName, ItemStack partstack)
-        {
-            return ModularItemHelper.AddPart(stack, slotName, partstack);
-        }
-
-        public SlotDefinition[] GetSlotDefinitions()
-        {
-            return ModularItemHelper.GetSlotDefinitions(this);
-        }
-
-        public Dictionary<string, ItemStack> GetSlots(IItemStack stack)
-        {
-            return ModularItemHelper.GetSlots(stack, api.World);
-        }
-
         public ItemStack GetToolheadStack(IItemStack stack)
         {
             return ModularItemHelper.GetToolheadStack(stack);
@@ -71,12 +55,7 @@ namespace TinkersToolbox.Items
             return ModularItemHelper.GetToolTier(stack);
         }
 
-        public bool HasNeededParts(ItemStack stack)
-        {
-            return ModularItemHelper.HasNeededParts(stack);
-        }
-
-        public void RecalculateAttributes(IItemStack stack)
+        public override void RecalculateAttributes(IItemStack stack)
         {
             ModularItemHelper.RecalculateAttributes(stack, api.World);
 
@@ -103,11 +82,6 @@ namespace TinkersToolbox.Items
             {
                 stack.Attributes.RemoveAttribute("tooltier");
             }
-        }
-
-        public ItemStack RemovePart(IItemStack stack, string slot)
-        {
-            return ModularItemHelper.RemovePart(stack, slot);
         }
     }
 }

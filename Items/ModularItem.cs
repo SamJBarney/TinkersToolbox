@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TinkersToolbox.Client.Mesh;
 using TinkersToolbox.Types;
 using TinkersToolbox.Utils;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
+using Vintagestory.Client.NoObf;
 
 namespace TinkersToolbox.Items
 {
@@ -57,6 +60,20 @@ namespace TinkersToolbox.Items
         public virtual void RecalculateAttributes(IItemStack stack)
         {
             ModularItemHelper.RecalculateAttributes(stack, api.World);
+        }
+
+        public override void OnBeforeRender(ICoreClientAPI capi, ItemStack itemstack, EnumItemRenderTarget target, ref ItemRenderInfo renderinfo)
+        {
+            base.OnBeforeRender(capi, itemstack, target, ref renderinfo);
+            if (itemstack.Attributes.GetOrAddTreeAttribute("toolparts").Count > 0)
+            {
+                MeshRef meshRef = MeshManager.GetMesh(api.World as ClientMain, itemstack);
+                System.Console.WriteLine("MeshRef exists: {0}", meshRef != null);
+                if (meshRef != null)
+                {
+                    renderinfo.ModelRef = meshRef;
+                }
+            }
         }
     }
 }
